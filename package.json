@@ -4,7 +4,9 @@
   "description": "Database adapter prototype for CRUD operations",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test secified\" && exit 1"
+    "test": "tape ./test/*.test.js | faucet",
+    "jshint": "jshint -c ./.jshintrc --exclude-path .gitignore .",
+    "coverage": "istanbul cover tape ./test/*.test.js && istanbul check-coverage --statements 95 --functions 95 --lines 95 --branches 95"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,10 @@
   "bugs": {
     "url": "https://github.com/foundersandcoders/russian-doll/issues"
   },
+  "pre-commit": [
+    "jshint",
+    "coverage"
+  ],
   "homepage": "https://github.com/foundersandcoders/russian-doll",
   "devDependencies": {
     "faucet": "0.0.1",
@@ -29,5 +35,9 @@
     "jshint": "^2.7.0",
     "pre-commit": "^1.0.6",
     "tape": "^4.0.0"
+  },
+  "dependencies": {
+    "hyperquest": "^1.2.0",
+    "through2": "^0.6.5"
   }
 }
