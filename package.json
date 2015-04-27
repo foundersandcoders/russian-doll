@@ -1,0 +1,26 @@
+{
+  "name": "russian-doll",
+  "version": "1.0.0",
+  "description": "Database adapter prototype for CRUD operations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/foundersandcoders/russian-doll.git"
+  },
+  "keywords": [
+    "crud",
+    "ES",
+    "database",
+    "adapter",
+    "driver"
+  ],
+  "author": "William Fisher, Besart Shyti",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/foundersandcoders/russian-doll/issues"
+  },
+  "homepage": "https://github.com/foundersandcoders/russian-doll"
+}
