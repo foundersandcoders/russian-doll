@@ -4,6 +4,12 @@ database adapter prototype for CRUD operations
 
 **use**
 ```js
+
+var config = {
+  index: "blog",   // elasticsearch index
+  type: "articles" // elasticsearch type
+};
+
 // instantiate interface with index and type
 var db = require("russian-doll")("index", "type");
 
@@ -59,13 +65,18 @@ db
 
 russian-doll exposes a single function that returns a DB adapter object:
 
-### instantiate(index, type)
+### instantiate(config)
 
 **_params_**
 
-```index```: the elasticsearch index for the db adapter to use
+```config```: a config object with the following properties:
 
-```type```: the elasticsearch type for the db adapter to use
+```
+{
+  index: "index", // the elasticsearch index for the db adapter to us
+  type: "type"    // the elasticsearch type for the db adapter to use
+}
+```
 
 **_returns_**
 

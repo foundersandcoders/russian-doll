@@ -4,7 +4,12 @@ var test = require("tape");
 var instantiate = require("..");
 var request = require("../lib/request.js");
 
-var articles = instantiate("index", "articles");
+var opts = {
+  index: "index",
+  type: "articles"
+};
+
+var articles = instantiate(opts);
 
 
 test("wipe db", function (t) {
