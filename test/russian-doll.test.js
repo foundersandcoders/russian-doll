@@ -11,8 +11,6 @@ var opts = {
   port: Number(process.env.ES_PORT)
 };
 
-console.log(opts);
-
 var articles = instantiate(opts);
 
 
@@ -55,8 +53,6 @@ test("#create should create new entry in database", function (t) {
     message: "yes",
     id: 1234
   }, function (e, r) {
-
-    console.log(arguments);
 
     t.notOk(e, "no error received");
     t.ok(r.created, "object created");
