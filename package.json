@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "hyperquest": "^1.2.0",
-    "through2": "^0.6.5"
+    "through2": "^0.6.5",
+    "torf": "^1.0.6"
   }
 }
