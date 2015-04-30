@@ -59,7 +59,8 @@ test("#create should create new entry in database", function (t) {
 
 	var obj = {
 		message: "yes",
-		id: "1234"
+		id: "1234",
+    status: "deleted"
 	};
 
 	articles.create(obj, function (e, r) {
@@ -84,7 +85,8 @@ test("#create should without id", function (t) {
 
 	var obj = {
 		name: "hello",
-		message: "yes"
+		message: "yes",
+    status: "deleted"
 	};
 
 	articles.create(obj, function (e, r) {
@@ -178,6 +180,73 @@ test("#update should return err if no id", function (t) {
 	});
 });
 
+test("#search should return an err if no search terms", function (t) {
+
+  var obj = {};
+
+  articles.search(obj, function (e, r) {
+
+    t.ok(e, "error returned");
+    t.notOk(r, "no record returned");
+    t.end();
+  });
+
+});
+
+test("#search should return an empty array if no matches", function (t) {
+
+  var obj = {
+    name: "berty"
+  };
+
+  articles.search(obj, function (e, r) {
+
+    t.notOk(e, "error not returned");
+    t.ok(is.type(r, "array"), "array returned");
+    t.equals(r.length, 0, "array is empty");
+    t.end();
+  });
+});
+
+
+test("#search should return array populated with matches if there are any", function (t) {
+
+
+  var obj = {
+    status: "deleted"
+  };
+  setTimeout(function () {
+
+    articles.search(obj, function (e, r) {
+
+      t.notOk(e, "error not returned");
+      t.ok(is.type(r, "array"), "array returned");
+      t.equals(r.length, 2, "array has two documents");
+      t.equals(r[0].status, "deleted", "document is match");
+      t.end();
+    });
+  }, 1000);
+});
+
+test("#search should support multiple search criteria", function (t) {
+
+  var obj = {
+    name: "bob",
+    status: "deleted"
+  };
+
+  articles.search(obj, function (e, r) {
+
+    t.notOk(e, "error not returned");
+    t.ok(is.type(r, "array"), "array returned");
+    t.equals(r.length, 1, "array has one document");
+    t.equals(r[0].name, "bob", "document is a match");
+    t.equals(r[0].status, "deleted", "document is a match");
+    t.end();
+  });
+
+});
+
 test("#del should not throw err if no match in db", function (t) {
 
 	var obj = {id:4321};
@@ -206,7 +275,7 @@ test("#del should delete entry from database", function (t) {
 	});
 });
 
-test("#del should throw err if no id", function (t) {
+test("#del should return err if no id", function (t) {
 
 	var obj = {hid: "23780459"};
 
@@ -217,6 +286,7 @@ test("#del should throw err if no id", function (t) {
 		t.end();
 	});
 });
+
 
 test("NOT A TEST wipe db", function (t) {
 
@@ -312,6 +382,19 @@ test("Error database connection", function (t){
 		};
 
 		failArticles.del(obj, function (e) {
+
+			st.ok(e, "error received");
+			st.end();
+		});
+	});
+
+  t.test("should trigger error in search record", function (st){
+
+		var obj = {
+			id: "1234"
+		};
+
+		failArticles.search(obj, function (e) {
 
 			st.ok(e, "error received");
 			st.end();
