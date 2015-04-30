@@ -180,17 +180,21 @@ test("#update should return err if no id", function (t) {
 	});
 });
 
-test("#search should return an err if no search terms", function (t) {
+test("#search should return an all if no search terms", function (t) {
 
   var obj = {};
 
-  articles.search(obj, function (e, r) {
+  	setTimeout(function (){
 
-    t.ok(e, "error returned");
-    t.notOk(r, "no record returned");
-    t.end();
-  });
+		articles.search(obj, function (e, r) {
 
+			t.notOk(e, "no error returned");
+			t.ok(r, "record returned");
+			t.ok(is.type(r, "array"), "array returned");
+			t.equals(r.length, 2, "array has two items");
+			t.end();
+		});
+	}, 1000);
 });
 
 test("#search should return an empty array if no matches", function (t) {
@@ -212,20 +216,19 @@ test("#search should return an empty array if no matches", function (t) {
 test("#search should return array populated with matches if there are any", function (t) {
 
 
-  var obj = {
-    status: "deleted"
-  };
-  setTimeout(function () {
+	var obj = {
+		status: "deleted"
+	};
 
-    articles.search(obj, function (e, r) {
 
-      t.notOk(e, "error not returned");
-      t.ok(is.type(r, "array"), "array returned");
-      t.equals(r.length, 2, "array has two documents");
-      t.equals(r[0].status, "deleted", "document is match");
-      t.end();
-    });
-  }, 1000);
+	articles.search(obj, function (e, r) {
+
+		t.notOk(e, "error not returned");
+		t.ok(is.type(r, "array"), "array returned");
+		t.equals(r.length, 2, "array has two documents");
+		t.equals(r[0].status, "deleted", "document is match");
+		t.end();
+	});
 });
 
 test("#search should support multiple search criteria", function (t) {
