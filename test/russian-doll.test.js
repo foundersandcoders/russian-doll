@@ -180,13 +180,13 @@ test("#update should return err if no id", function (t) {
 	});
 });
 
-test("#search should return an all if no search terms", function (t) {
+test("#find should return an all if no find terms", function (t) {
 
   var obj = {};
 
   	setTimeout(function (){
 
-		articles.search(obj, function (e, r) {
+		articles.find(obj, function (e, r) {
 
 			t.notOk(e, "no error returned");
 			t.ok(r, "record returned");
@@ -197,13 +197,13 @@ test("#search should return an all if no search terms", function (t) {
 	}, 1000);
 });
 
-test("#search should return an empty array if no matches", function (t) {
+test("#find should return an empty array if no matches", function (t) {
 
   var obj = {
     name: "berty"
   };
 
-  articles.search(obj, function (e, r) {
+  articles.find(obj, function (e, r) {
 
     t.notOk(e, "error not returned");
     t.ok(is.type(r, "array"), "array returned");
@@ -213,7 +213,7 @@ test("#search should return an empty array if no matches", function (t) {
 });
 
 
-test("#search should return array populated with matches if there are any", function (t) {
+test("#find should return array populated with matches if there are any", function (t) {
 
 
 	var obj = {
@@ -221,7 +221,7 @@ test("#search should return array populated with matches if there are any", func
 	};
 
 
-	articles.search(obj, function (e, r) {
+	articles.find(obj, function (e, r) {
 
 		t.notOk(e, "error not returned");
 		t.ok(is.type(r, "array"), "array returned");
@@ -231,14 +231,14 @@ test("#search should return array populated with matches if there are any", func
 	});
 });
 
-test("#search should support multiple search criteria", function (t) {
+test("#find should support multiple find criteria", function (t) {
 
   var obj = {
     name: "bob",
     status: "deleted"
   };
 
-  articles.search(obj, function (e, r) {
+  articles.find(obj, function (e, r) {
 
     t.notOk(e, "error not returned");
     t.ok(is.type(r, "array"), "array returned");
@@ -391,13 +391,13 @@ test("Error database connection", function (t){
 		});
 	});
 
-  t.test("should trigger error in search record", function (st){
+  t.test("should trigger error in find record", function (st){
 
 		var obj = {
 			id: "1234"
 		};
 
-		failArticles.search(obj, function (e) {
+		failArticles.find(obj, function (e) {
 
 			st.ok(e, "error received");
 			st.end();
